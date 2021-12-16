@@ -30,13 +30,19 @@ jobs:
         cat /etc/issue
         cat /etc/os-release
         sudo apt-get install -y neofetch && neofetch   
-    - name: "run docker-osx matrix"
+    - name: "run docker-osx mojave"
       run: |
         dir=$(pwd)
         cd $dir/dockerfiles/macos
         cd ${{matrix.node}}
         #Mojave
-        docker build -t docker-osx --build-arg SHORTNAME=mojave .         
+        docker build -t docker-osx --build-arg SHORTNAME=mojave .               
+        docker image ls      
+    - name: "run docker-osx high-sierra"
+      run: |
+        dir=$(pwd)
+        cd $dir/dockerfiles/macos
+        cd ${{matrix.node}}    
         #High Sierra
         docker build -t docker-osx --build-arg SHORTNAME=high-sierra .        
-        docker image ls                   
+        docker image ls                       

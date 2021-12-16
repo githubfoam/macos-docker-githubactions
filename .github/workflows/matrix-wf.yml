@@ -16,8 +16,7 @@ jobs:
       matrix:
         node:
         #  - golang
-        #  - python
-         #windows cluster
+         - python
          - base                 
     steps:
     - uses: actions/checkout@v2
@@ -35,7 +34,7 @@ jobs:
         dir=$(pwd)
         cd $dir/dockerfiles/macos
         cd ${{matrix.node}}       
-        #Catalina
+        # https://github.com/sickcodes/Docker-OSX
+        #Catalina        
         docker build -t docker-osx/${{matrix.node}} . 
-        # docker build -t docker-osx/${{matrix.node}}  --build-arg VERSION=10.15.5 --build-arg SIZE=200G .
         docker image ls                   

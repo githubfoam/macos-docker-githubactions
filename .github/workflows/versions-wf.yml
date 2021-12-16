@@ -30,15 +30,25 @@ jobs:
         cat /etc/issue
         cat /etc/os-release
         sudo apt-get install -y neofetch && neofetch   
-    - name: "run docker-osx matrix"
+    - name: "run docker-osx monterey"
+      run: |
+        dir=$(pwd)
+        cd $dir/dockerfiles/macos/base
+        #Monterey
+        docker build -t docker-osx --build-arg SHORTNAME=monterey  .
+        docker image ls         
+    - name: "run docker-osx catalina"
       run: |
         dir=$(pwd)
         cd $dir/dockerfiles/macos/base
         #Catalina
-        docker build -t docker-osx . 
-        # docker build -t docker-osx/${{matrix.node}}  --build-arg VERSION=10.15.5 --build-arg SIZE=200G .
+        docker build -t docker-osx/catalina . 
+        # docker build -t docker-osx/catalina --build-arg VERSION=10.15.5 --build-arg SIZE=200G .
+        docker image ls  
+    - name: "run docker-osx big-sur"
+      run: |
+        dir=$(pwd)
+        cd $dir/dockerfiles/macos/base
         #Big Sur
         docker build -t docker-osx --build-arg SHORTNAME=big-sur .
-        #Monterey
-        docker build -t docker-osx --build-arg SHORTNAME=monterey  .
-        docker image ls                   
+        docker image ls                            
