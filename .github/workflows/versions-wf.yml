@@ -1,4 +1,4 @@
-name: "macos build all CI workflow"
+name: "version macos matrix build all CI workflow"
 
 
 on:
@@ -30,11 +30,15 @@ jobs:
         cat /etc/issue
         cat /etc/os-release
         sudo apt-get install -y neofetch && neofetch   
-    - name: "run docker-osx"
+    - name: "run docker-osx matrix"
       run: |
         dir=$(pwd)
-        cd $dir/dockerfiles/macos
-        cd ${{matrix.node}}
-        docker build -t docker-osx/${{matrix.node}} .
-        docker build -t docker-osx/${{matrix.node}}  --build-arg VERSION=10.15.5 --build-arg SIZE=200G .
-        cd $dir         
+        cd $dir/dockerfiles/macos/base
+        #Catalina
+        docker build -t docker-osx . 
+        # docker build -t docker-osx/${{matrix.node}}  --build-arg VERSION=10.15.5 --build-arg SIZE=200G .
+        #Big Sur
+        docker build -t docker-osx --build-arg SHORTNAME=big-sur .
+        #Monterey
+        docker build -t docker-osx --build-arg SHORTNAME=monterey  .
+        docker image ls                   

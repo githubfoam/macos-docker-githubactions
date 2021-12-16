@@ -1,5 +1,4 @@
 FROM archlinux:base-devel
-LABEL maintainer='https://twitter.com/sickcodes <https://sick.codes>'
 
 SHELL ["/bin/bash", "-c"]
 

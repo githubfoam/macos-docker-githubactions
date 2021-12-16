@@ -1,0 +1,41 @@
+name: "macos matrix build all CI workflow"
+
+
+on:
+  push:
+    branches: [ test ]
+  schedule:
+      # https://crontab.guru/examples.html #every friday at midnight  
+      - cron:  '0 0 * * FRI' 
+jobs:
+
+  ubuntu-latest-2110-job:
+    name: "docker  ansible clearlinux"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+        #  - golang
+        #  - python
+         #windows cluster
+         - base                 
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch   
+    - name: "run docker-osx matrix"
+      run: |
+        dir=$(pwd)
+        cd $dir/dockerfiles/macos
+        cd ${{matrix.node}}       
+        #Catalina
+        docker build -t docker-osx/${{matrix.node}} . 
+        # docker build -t docker-osx/${{matrix.node}}  --build-arg VERSION=10.15.5 --build-arg SIZE=200G .
+        docker image ls                   
