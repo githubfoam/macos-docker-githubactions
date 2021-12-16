@@ -16,7 +16,7 @@ jobs:
       matrix:
         node:
         #  - golang
-         - python
+        #  - python
          - base                 
     steps:
     - uses: actions/checkout@v2
@@ -38,3 +38,4 @@ jobs:
         #Catalina        
         docker build -t docker-osx/${{matrix.node}} . 
         docker image ls                   
+        docker build -t docker-osx/python
